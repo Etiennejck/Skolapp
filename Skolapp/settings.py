@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'SCHOOL.apps.SchoolConfig',
     'CANDIDAT.apps.CandidatConfig',
+    'INSCRIPTION.apps.InscriptionConfig',
 
 ]
 

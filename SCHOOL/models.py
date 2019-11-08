@@ -15,10 +15,6 @@ class ClassRoom(models.Model):
     number = models.IntegerField(verbose_name="numero de la classe")
 
 
-class QuarterClass(models.Model):
-    classroomFK = models.ForeignKey(ClassRoom, on_delete=models.CASCADE)
-    quarterFK = models.ForeignKey(Quarter, on_delete=models.CASCADE)
-
 class Personne(models.Model):
     nom = models.CharField(max_length=50)
     prenom = models.CharField(max_length=50)

@@ -1,11 +1,12 @@
 from django.db import models
 from django.utils import timezone
-from SCHOOL.models import School
+from SCHOOL.models import School, ClassRoom
+from CANDIDAT.models import Parent
 
 
 class Inscription(models.Model):
     dateInscription = models.DateField(verbose_name="date d'inscription")
-
+    parents = models.ForeignKey(Parent, on_delete=models.CASCADE)
 
 
 
@@ -17,5 +18,6 @@ class Years(models.Model):
 
 class Quarter(models.Model):
     quarterNr = models.IntegerField(verbose_name="Trimestre numero", max_length=2)
+    classRooms = models.ManyToManyField(ClassRoom)
 
 

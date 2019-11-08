@@ -13,7 +13,6 @@ class Student(models.Model):
     AccordPedagogique = models.BooleanField(verbose_name="Accord pédagogique", default=False)
     AccordImage = models.BooleanField(verbose_name="Accord diffusion image", default=False)
     GardeParental = models.CharField(verbose_name="Garde parental", max_length=50)
-    parentFK = models.OneToOneField("Parent", on_delete=models.CASCADE)
 
 
 class Parent(models.Model):
@@ -26,5 +25,6 @@ class Parent(models.Model):
     mail = models.EmailField()
     dateInscription = models.DateField(verbose_name="date d'inscription", auto_now_add=True)
     inscriptionFK = models.ForeignKey(Inscription, on_delete=models.CASCADE)
+    students = models.ManyToManyField(Student)
 
 
