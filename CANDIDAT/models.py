@@ -1,5 +1,5 @@
 from django.db import models
-from INSCRIPTION.models import Inscription
+
 
 class Student(models.Model):
     nom = models.CharField(max_length=50)
@@ -24,7 +24,6 @@ class Parent(models.Model):
     ville = models.CharField(max_length=100)
     mail = models.EmailField()
     dateInscription = models.DateField(verbose_name="date d'inscription", auto_now_add=True)
-    inscriptionFK = models.ForeignKey(Inscription, on_delete=models.CASCADE)
     students = models.ManyToManyField(Student)
 
 
