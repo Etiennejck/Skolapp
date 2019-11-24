@@ -16,6 +16,10 @@ class School (models.Model):
 class ClassRoom(models.Model):
     sectionClass = models.CharField(verbose_name="Section", max_length=50)
     number = models.IntegerField(verbose_name="numero de la classe")
+    nombrePlaces = models.IntegerField(verbose_name="capacitée de la classe", null=True)
+
+    def __str__(self):
+        return 'Section: {} , année de la classe: {} , le nombre de place dans la classe: {}'.format(self.sectionClass, self.number, self.nombrePlaces)
 
 
 class Personne(models.Model):

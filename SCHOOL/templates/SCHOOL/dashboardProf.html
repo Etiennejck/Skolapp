@@ -20,18 +20,24 @@
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/b-1.5.2/b-colvis-1.5.2/r-2.2.2/sc-1.5.0/sl-1.2.6/datatables.min.css"/>
 
 
+
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-ios.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
 </head>
-<body style="background-color: darkgray">
+<body style="background-color: darkgray" >
 
-<table id="client"  class="table-info">
+<table id="client"  class="table-info" >
                     <thead class="table-dark">
                         <tr>
                             <th>Nom</th>
                             <th>Prenom</th>
+                            <th>date de naissance</th>
+                            <th>Nationnalité</th>
+                            <th>Garde Parental</th>
+                            <th>Sexe</th>
+                            <th>Classe précédente</th>
                             <th></th>
                             <th></th>
                             <th></th>
@@ -43,6 +49,11 @@
                            <tr>
                                <td>{{ clts.nom}}</td>
                                <td>{{ clts.prenom }}</td>
+                               <td>{{ clts.dateNaissance }}</td>
+                               <td>{{ clts.Nationalite }}</td>
+                               <td>{{ clts.GardeParental }}</td>
+                               <td>{{ clts.sexe }}</td>
+                               <td>{{ clts.ClassePrecedente }}</td>
                                <td><a href="" class="btn btn-danger">DELETED</a></td>
                                <td><a href="" class="select2-results">SELECT</a></td>
                                <td><a href="" class="select2-results">DETAILS</a></td>
@@ -56,9 +67,6 @@
                         {% endfor %}
                     </tbody>
                 </table>
-
-
-
 
 
 
@@ -78,11 +86,13 @@
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/b-1.5.2/b-colvis-1.5.2/r-2.2.2/sc-1.5.0/sl-1.2.6/datatables.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="{% static 'js/VueJSInteraction.js' %}"></script>
 
     <script type="text/javascript">
         
         $(function () {
-            $('#client').DataTable():
+            $('#client').DataTable();
         })
         
     </script>
