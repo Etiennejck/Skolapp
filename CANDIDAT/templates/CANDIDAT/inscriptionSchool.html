@@ -43,12 +43,10 @@
                                 {% csrf_token %}
 
                                 <div class="form-group">
-                                    <label for="province" class="col-md-3 control-label">Nombre d'enfant</label>
+                                    <label for="province" class="col-md-3 control-label">enfant</label>
                                     <div class="col-md-9">
                                         <div >
                                             <p>[[nombre]]</p>
-                                            <button v-on:click="ajouter1">+</button>
-                                            <button v-on:click="reduire1">-</button>
                                         </div>
                                     </div>
                                 </div>
@@ -57,14 +55,17 @@
 
                                 </div>
 
-                            <div class="jumbotron-fluid" v-for="nbr in nombre">
+                            <div class="jumbotron-fluid">
                                 <div class="jumbotron">
                                 <div class="form-group">
                                     <form action="{% url 'inscriptionSchool' %}" method="post" class="form-group">
                                         {% csrf_token %}
                                         <p style="animation: ease-in">{{ form2.as_p }}</p>
-                                        <p style="color: #7c0214">Cliquez sur Ok lorsque tout les champs sont remplis </p>
-                                        <input type="submit" value="OK" class="btn btn-success">
+                                        <p style="color: seagreen">Voulez enregistrez un autre enfant ? </p>
+                                        <input type="submit" value="OUI" class="btn btn-success" id="ajouter" v-on:click="ajouter1">
+                                        <p style="color: #7c0214">Lorsque vous avez terminé cliqué sur Inscription Parent </p>
+                                        <button class="btn btn-info"> <a href="{% url 'inscriptionParent' 1 %}">Inscription Parent</a> </button>
+
                                     </form>
                                 </div>
                                 </div>
@@ -98,7 +99,7 @@
             delimiters: ['[[',']]'],
             el: '#ajouter',
             data: {
-                nombre: 0
+                nombre: 1
             },
             methods: {
                 ajouter1: function () {
