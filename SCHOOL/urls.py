@@ -7,4 +7,5 @@ urlpatterns = [
     url(r'^welcom', views.welcom, name='welcom'),
     url(r'^dashboardProf', views.dashboardProf, name='dashboardProf'),
     url(r'^LoginParent', views.LoginParent,name='LoginParent'),
+    url(r'^LogOut_view', views.LogOut_view,name='LogoutView'),
 ]

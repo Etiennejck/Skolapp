@@ -16,7 +16,8 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
 
-<div class="login-wrap">
+<form action="{% url 'LoginParent' %}" method="post" class="login-wrap">
+    {% csrf_token %}
 	<div class="login-html">
 		<input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
 		<input id="tab-2" type="radio" name="tab" class="for-pwd"><label for="tab-2" class="tab">Forgot Password</label>
@@ -47,4 +48,11 @@
 			</div>
 		</div>
 	</div>
-</div>
+</form>
+ {% if messages %}
+         <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+         {% endfor %}
+         </ul>
+    {% endif %}

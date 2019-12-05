@@ -21,6 +21,7 @@
     <orderEntry type="library" name="vue" level="application" />
     <orderEntry type="library" name="bubbles" level="application" />
     <orderEntry type="library" name="alphabet" level="application" />
+    <orderEntry type="library" name="jquery.easing" level="application" />
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_CONFIGURATION" value="Django" />

@@ -16,7 +16,7 @@
         <link rel="stylesheet" href={% static "fonts/flaticon/font/flaticon.css"%}>
         <link rel="stylesheet" href={% static "css/bootstrap-datepicker.css"%}>
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/b-1.5.2/b-colvis-1.5.2/r-2.2.2/sc-1.5.0/sl-1.2.6/datatables.min.css"/>
-
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-ios.css">
@@ -26,9 +26,21 @@
 
 
     <div>
-        <canvas id="myCanvas" style="margin: 10%"></canvas>
-        <a style="text-decoration: none" href="/"><H1 id="test1" style="font-family: 'AppleGothic'; margin: 30%; font-size: 100px; color: white"> S<b style="font-size: 120px">K</b>OLA<b style="font-family: 'small'; color: greenyellow">pp</b></H1></a>
+{#        <canvas id="myCanvas" style="margin: 10%"></canvas>#}
+        <div id="Mariadale" class="hidden"><img src="{% static 'images/MArieadal Logo.png' %}" style="width: 30%; margin-left: 30%; margin-top: 20%"></div>
+        <div id="iconme"><i class="far fa-arrow-alt-circle-down" style="font-size: 700%; color: greenyellow; position: center; margin-left: 45%; margin-top: 2%; margin-bottom: 3%"></i></div>
+        <div id="loginP" class="fa-rotate-270" style="margin-right:1100px; margin-top:-350px "><H1 id="test1" style="font-family: 'AppleGothic';font-size: 30px; color: white"> S<b style="font-size: 50px">K</b>OLA<b style="font-family: 'small'; color: greenyellow">pp</b></H1></div>
+        <div id="ajaxLogin"></div>
+         {# message d'erreur #}
+        <div style="padding-left: 400px; padding-top: 300px">{% if messages %}
+         <ul class="messages">
+        {% for message in messages %}
+            <ul style="font-size: 30px; color: greenyellow" {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</ul>
+         {% endfor %}
+         </ul>
+    {% endif %}</div>
     </div>
+
 
 
     <script type="text/javascript" src="https://s3.amazonaws.com/codecademy-content/courses/hour-of-code/js/bubbles.js"></script>
@@ -52,7 +64,26 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script type="text/javascript" src="https://s3.amazonaws.com/codecademy-content/courses/hour-of-code/js/alphabet.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
     <script type="text/javascript">
+
+
+        $(function () {
+            toastr.options.progressBar = true;
+            toastr.options.showMethod = 'slideDown';
+            toastr.options.hideMethod = 'slideUp';
+            toastr.options.closeMethod = 'slideUp';
+            $('#iconme').tooltip({title:'Click me !', delay:100, animation:true, placement: 'bottom'});
+            $("#iconme").on('click', function(){
+
+                $("#ajaxLogin").load('{% url 'LoginParent' %}');
+                toastr.success('Bonjour', 'SIGN IN', {timeOut:5000});
+                $("#myCanvas").hide();
+                $("#Mariadale").show();
+            });
+
+        });
+
         var red = [0, 100, 63];
         var orange = [40, 100, 60];
         var green = [75, 100, 40];
@@ -66,11 +97,7 @@
         drawName(myName, letterColors);
         bounceBubbles();
 
-        $(function () {
-            $("#test1").on('click', function(){
 
-            })
-        })
 
     </script>
 
