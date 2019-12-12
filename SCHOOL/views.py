@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from django.contrib.auth.decorators import login_required
+from django.views.generic import TemplateView
 
 from CANDIDAT.models import Parent, Student
 from django.shortcuts import render, redirect
@@ -44,3 +45,6 @@ def LoginParent(request, **kwargs):
 def LogOut_view(request):
     logout(request)
     return render(request, 'SCHOOL/Welcom.html')
+
+class JournalDeClasseView(TemplateView):
+    template_name = 'SCHOOL/JDCView.html'
