@@ -30,6 +30,8 @@ class Parent(models.Model):
     Telephone = PhoneNumberField(null=True)
     mail = models.EmailField()
     dateInscription = models.DateField(verbose_name="date d'inscription", auto_now_add=True)
-    students = models.ManyToManyField(Student, verbose_name="student")
+    def __str__(self):
+        return "Nom: {} Prenom: {} Date d'inscription: {}".format(self.nom, self.prenom, self.dateInscription)
+
 
 

@@ -36,24 +36,24 @@
         <h1>Bonjour <br> Veuillez mentionner le nombre d'enfant à inscrire </h1>
     </div>
         <div id="signupbox" style=" margin-top:50px" class="mainbox col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2">
-                    <div class="panel panel-info">
+            <div class="panel panel-info">
+                <div class="panel-body was-validated" id="ajouter" >
+                    <div id="signupform"  class="form-horizontal" role="form" methode="post">
+                        {% csrf_token %}
 
-                        <div class="panel-body was-validated" id="ajouter" >
-                            <div id="signupform"  class="form-horizontal" role="form" methode="post">
-                                {% csrf_token %}
-
-                                <div class="form-group">
-                                    <label for="province" class="col-md-3 control-label">enfant</label>
-                                    <div class="col-md-9">
-                                        <div >
-                                            <p>[[nombre]]</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="jumbotron-fluid">
+                        <div class="form-group">
+                            <label for="province" class="col-md-3 control-label">enfant</label>
+                            <div class="col-md-9">
+                                <div >
+                                    <p>[[nombre]]</p>
 
                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="jumbotron-fluid">
+
+                        </div>
 
                             <div class="jumbotron-fluid">
                                 <div class="jumbotron">
@@ -64,16 +64,15 @@
                                         <p style="color: seagreen">Voulez enregistrez un autre enfant ? </p>
                                         <input type="submit" value="OUI" class="btn btn-success" id="ajouter" v-on:click="ajouter1">
                                         <p style="color: #7c0214">Lorsque vous avez terminé cliqué sur Inscription Parent </p>
-                                        <button class="btn btn-info"> <a href="{% url 'inscriptionParent' 1 %}">Inscription Parent</a> </button>
-
+                                        <input type="submit" >
                                     </form>
                                 </div>
                                 </div>
                             </div>
                          </div>
                     </div>
-         </div>
-    </div>
+                </div>
+        </div>
 
 
     <script src={% static "js/jquery.min.js" %}></script>

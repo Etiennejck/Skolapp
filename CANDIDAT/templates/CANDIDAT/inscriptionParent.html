@@ -33,72 +33,45 @@
 <div class="container">
 
     <div>
-        <h1 id="said"> Bonjour<br> Veuillez à remplir toutes les cases </h1>
-    </div>
-        <div id="signupbox" style=" margin-top:50px" class="mainbox col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2">
-                    <div class="panel panel-info">
-
-                        <div class="panel-body was-validated" id="ajouter" >
-                            <div id="signupform"  class="form-horizontal" role="form" >
-
-
-
-                            <div >
-                                <div class="panel-heading">
-                                    <div class="panel-title" style="font-weight:600; margin-top:50px">IDENTIFICATION</div>
-                                </div>
-
-                                <div class="jumbotron-fluid">
-                                <div class="jumbotron">
-                                <div class="form-group">
-                                    <form action="{% url 'inscriptionParent' studParent.id %}" method="post" class="form-group">
-                                        {% csrf_token %}
-                                        <p style="animation: alternate">{{ form.as_p }} - {{ studParent }}</p>
-                                        <p style="color: #7c0214">Cliquez sur Ok lorsque tout les champs sont remplis </p>
-                                        <input type="submit"  value="OK" class="btn btn-success">
-                                    </form>
-                                </div>
-                                </div>
-                            </div>
-
-                                <div class="form-group" >
-                                    <label for="register_password" class="col-md-3 control-label">Mot de passe</label>
-                                    <div class="col-md-9">
-                                        <input type="password" id="register_password" data-minlength="8" class="form-control" name="password" placeholder="mot de passe" required>
-                                        <div class="help-block">Minimum de 8 caractere</div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="confir_password" class="col-md-3 control-label">Confirmer le mot de passe</label>
-                                    <div class="col-md-9">
-                                        <input type="password" id="confir_password" data-minlength="8" class="form-control" name="psw" placeholder="Entrer le même mot de passe" required>
-                                    </div>
-                                    <div class="help-block avec_erreur"></div>
-                                </div>
-
-                                <div class="form-group" >
-                                    <!-- Boutton -->
-                                    <div class="col-md-offset-3 col-md-9" style=" margin-top:20px;">
-                                        <input id="btn-signup" type="submit" form="signupbox" class="btn btn-info col-md-12"><i class="icon-hand-right"></i> &nbsp S'enregister</input>
-                                    </div>
-                                </div>
-                            </div>
-
-                         </div>
-                    </div>
-         </div>
+        <h1 id="said"> Bonjour<br> Veuillez remplir toutes les cases </h1>
     </div>
 
+    <div class="jumbotron-fluid">
+        <div class="jumbotron">
+            <form action="{% url 'inscriptionParent' %}" method="post" class="form-group was-validated">
+                {% csrf_token %}
+                <p>{{ form.as_p }} </p>
 
-    <script src={% static "js/jquery.min.js" %}></script>
-    <script src={% static "js/popper.min.js"%}></script>
-    <script src={% static "js/owl.carousel.min.js"%}></script>
-    <script src={% static "js/bootstrap-datepicker.js"%}></script>
-    <script src={% static "js/jquery.waypoints.min.js"%}></script>
-    <script src={% static "js/jquery.easing.1.3.js"%}></script>
-    <script src={% static "js/select2.min.js"%}></script>
-    <script src={% static "js/main.js"%}></script>
+                <div class="form-group">
+                    <label for="uname">Username:</label>
+                    <input type="text" class="form-control" id="uname" placeholder="Enter username" name="username" required>
+                    <div class="valid-feedback">Valid.</div>
+                    <div class="invalid-feedback">Please fill out this field.</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="pwd">Password:</label>
+                    <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd" required>
+                    <div class="valid-feedback">Valid.</div>
+                    <div class="invalid-feedback">Please fill out this field.</div>
+                </div>
+
+                <input type="submit" value="OK" class="btn btn-primary">
+                <p style="color: #7c0214">Cliquez sur Ok lorsque tout les champs sont remplis </p>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script src={% static "js/jquery.min.js" %}></script>
+<script src={% static "js/popper.min.js"%}></script>
+<script src={% static "js/owl.carousel.min.js"%}></script>
+<script src={% static "js/bootstrap-datepicker.js"%}></script>
+<script src={% static "js/jquery.waypoints.min.js"%}></script>
+<script src={% static "js/jquery.easing.1.3.js"%}></script>
+<script src={% static "js/select2.min.js"%}></script>
+<script src={% static "js/main.js"%}></script>
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

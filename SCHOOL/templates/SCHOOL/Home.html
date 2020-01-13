@@ -40,7 +40,7 @@
     </div>
 
 {#    <div class="w3-padding w3-display-topmiddle w3-xxxlarge" style="margin-top: 10%"><h1 style="font-family: AppleGothic,serif">MARIADAL</h1></div>#}
-    <div  class="w3-padding w3-display-left" style="margin-left: 10%"><button id="parentLogin" class="w3-btn w3-border w3-jumbo" style="font-family: AppleGothic,serif" >PARENT</button></div>
+      <div  class="w3-padding w3-display-left" style="margin-left: 10%"><button id="parentLogin" class="w3-btn w3-border w3-jumbo" style="font-family: AppleGothic,serif" ><a style="text-decoration: none" href="dashboardProf.html">PARENT</a></button></div>
     <div id="loginP" class="w3-padding w3-display-right" style="margin-right: 10%"></div>
 {#    <div class="w3-padding w3-display-middle w3-xxlarge">Middle</div>#}
     <div class="w3-padding w3-display-bottommiddle">
@@ -73,11 +73,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
     <script type="text/javascript">
-        $(function(){
-            $("#parentLogin").on('click', function () {
-                $("#loginP").load('{% url 'LoginParent' %}');
-            })
-        })
+
     </script>
 </body>
 </html>

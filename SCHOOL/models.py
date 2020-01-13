@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.utils import timezone
 from CANDIDAT.models import Parent
 
@@ -11,6 +12,7 @@ class School (models.Model):
     ville = models.CharField(max_length=100)
     inscriptionFK = models.ForeignKey("Inscription", on_delete=models.CASCADE)
     classroomFK = models.ForeignKey("ClassRoom", on_delete=models.CASCADE)
+
 
 
 class ClassRoom(models.Model):

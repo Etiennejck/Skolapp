@@ -1,13 +1,16 @@
 from datetime import datetime
 
 from django.contrib.auth.decorators import login_required
-from django.views.generic import TemplateView
+from django.urls import reverse_lazy
+from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView
 
 from CANDIDAT.models import Parent, Student
 from django.shortcuts import render, redirect
 from django.utils.datetime_safe import date
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+
+from SCHOOL.models import ClassRoom
 
 
 def Home(request):
@@ -16,18 +19,28 @@ def Home(request):
     return render(request, 'SCHOOL/Home.html', {'dateDuJour': dateDuJour,'heure': heure})
 
 def welcom(request):
-    return render(request, 'SCHOOL/Welcom.html')
+    dateDuJour = date.today()
+    heure = datetime.now()
+    return render(request, 'SCHOOL/Welcom.html', {'dateDuJour': dateDuJour,'heure': heure})
 
 
 def dashboardProf(request):
     if request.user.is_authenticated:
+        user = request.user
         students = Student.objects.all()
-        return render(request, 'SCHOOL/dashboardProf.html', {'students': students})
+        return render(request, 'SCHOOL/dashboardProf.html', {'students': students, 'user':user})
     else:
         messages.info(request, 'Vous n\'est pas loger' )
         return redirect('welcom')
 
-
+def dashboardParent(request):
+    if request.user.is_authenticated:
+        user = request.user
+        students = Student.objects.all()
+        return render(request, 'SCHOOL/dashboardParent.html', {'students': students, 'user':user})
+    else:
+        messages.info(request, 'Vous n\'est pas loger' )
+        return redirect('welcom')
 
 def LoginParent(request, **kwargs):
     if request.method == 'POST':
@@ -36,7 +49,7 @@ def LoginParent(request, **kwargs):
         user = authenticate(request,username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('dashboardProf')
+            return redirect('dashboardParent')
         else:
             messages.error(request, 'your email or password is not correct')
             return redirect('welcom')
@@ -46,5 +59,17 @@ def LogOut_view(request):
     logout(request)
     return render(request, 'SCHOOL/Welcom.html')
 
-class JournalDeClasseView(TemplateView):
+class JournalDeClasseView(ListView):
+    model = Student #Definie le model de la base de données que l'on va utilisé c'est = à (queryset= model.object.all())
+    context_object_name = 'Etudiant' #permet de changer le nom de la variable à utilisé dans le gabarit
     template_name = 'SCHOOL/JDCView.html'
+    note_de_compmortement = {}
+    devoir = []
+
+    def post(self, request, **kwargs):
+        if request.method == 'POST':
+            noteComportement = request
+
+
+def communicationSchool(request):
+    return render(request, 'SCHOOL/communicationSchool.html')
