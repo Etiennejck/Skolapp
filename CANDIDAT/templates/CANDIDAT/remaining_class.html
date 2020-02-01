@@ -29,54 +29,38 @@
 
 </head>
 <body style="background-color: gray">
-
-<div class="container">
-
-    <div>
-        <h1 id="said"> Bonjour<br> Veuillez remplir toutes les cases </h1>
-    </div>
-
+<div>
+    <h1 style="text-align: center">Mariadal </h1>
+</div>
+<div class="container-fluid">
     <div class="jumbotron-fluid">
         <div class="jumbotron">
-            <form action="{% url 'inscriptionParent' %}" method="post" class="form-group was-validated">
-                {% csrf_token %}
-                <p>{{ form.as_p }} </p>
-                <p>{{ form.mail.default_validators }}</p>
-                <p>{{ form.Telephone.default_validators }}</p>
+        <table id="classe" class="table-info">
+            <thead class="table-dark">
+            <tr>
+                <th>Section</th>
+                <th>Classe</th>
+                <th>nbr de place</th>
+            </tr>
+            </thead>
+            <tbody id="body" class="table-hover">
+            {% for cls in placefree %}
+                <tr>
+                    <td>{{ cls.sectionClass }}</td>
+                    <td>{{ cls.number }}</td>
+                    <td>{{ cls.nombrePlaces }}</td>
+                </tr>
+                {% empty %}
+                           <tr>
+                                <td colspan="7" class="text-center bg-warning">nobody</td>
+                           </tr>
+            {% endfor %}
+            </tbody>
 
-
-                <div class="form-group">
-                    <label for="uname">Username:</label>
-                    <input type="text" class="form-control" id="uname" placeholder="Enter username" name="username" required>
-                    <div class="valid-feedback">Valid.</div>
-
-                </div>
-
-                <div class="form-group">
-                    <label for="pwd">Password:</label>
-                    <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd" required>
-                    <div class="valid-feedback">Valid.</div>
-
-                </div>
-                <p>{{ students }}</p>
-                <input type="submit" value="OK" class="btn btn-primary">
-                <p style="color: #7c0214">Cliquez sur Ok lorsque tout les champs sont remplis </p>
-                <p>{{ res.capitalize }}</p>
-                {% for listSchool in placefree %}
-                    <p>{{ listSchool }}</p>
-                {% endfor %}
-            </form>
-        {% if messages %}
-         <ul class="messages">
-        {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-         {% endfor %}
-         </ul>
-    {% endif %}
+        </table>
         </div>
     </div>
 </div>
-
 
 <script src={% static "js/jquery.min.js" %}></script>
 <script src={% static "js/popper.min.js"%}></script>
@@ -97,41 +81,14 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
     <script type="text/javascript">
-        var ajouter = new Vue({
-            delimiters: ['[[',']]'],
-            el: '#ajouter',
-            data: {
-                nombre: 0
-            },
-            methods: {
-                ajouter1: function () {
-                    this.nombre += 1
-                },
-                reduire1: function () {
-                    this.nombre -= 1
-                }
-                }
-        });
-
-        var hi = new Vue({
-           el:'#hi',
-            data:{
-               seen: false
-            },
-
-        });
-         var said = new Vue({
-             delimiters: ['[[',']]'],
-            el:'#said',
-            data:{
-                message:''
-            }
-         });
-
         $(function () {
+            var tableClasse = $('#classe').DataTable({
+                select: false
+            });
+            $("button").on('click', function () {
 
+            });
         });
-
     </script>
 </body>
 </html>

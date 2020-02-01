@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <title>W3.CSS Template</title>
@@ -14,14 +15,14 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 <!-- Top container -->
 <div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
   <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
-  <span class="w3-bar-item w3-right">Logo</span>
+  <span class="w3-bar-item w3-right">MARIADAL</span>
 </div>
 
 <!-- Sidebar/menu -->
 <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
   <div class="w3-container w3-row">
     <div class="w3-col s4">
-      <img src="/w3images/avatar2.png" class="w3-circle w3-margin-right" style="width:46px">
+      <img src="{% static 'images/avatar3.png' %}" class="w3-circle w3-margin-right" style="width:46px">
     </div>
     <div class="w3-col s8 w3-bar">
       <span>Welcome, <strong>{{ user.username }}</strong></span><br>
@@ -78,7 +79,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
           <h3>99</h3>
         </div>
         <div class="w3-clear"></div>
-        <h4>Views</h4>
+        <h4>Studens</h4>
       </div>
     </div>
     <div class="w3-quarter">
@@ -95,10 +96,10 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
       <div class="w3-container w3-orange w3-text-white w3-padding-16">
         <div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>
         <div class="w3-right">
-          <h3>50</h3>
+          <h3>{{ students.count }}</h3>
         </div>
         <div class="w3-clear"></div>
-        <h4>Users</h4>
+        <h4>Studens</h4>
       </div>
     </div>
   </div>
@@ -107,7 +108,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
     <div class="w3-row-padding" style="margin:0 -16px">
       <div class="w3-third">
         <h5>Regions</h5>
-        <img src="/w3images/region.jpg" style="width:100%" alt="Google Regional Map">
+        <img src="{% static 'images/MArieadal Logo.png' %}" style="width:100%" alt="Google Regional Map">
       </div>
       <div class="w3-twothird">
         <h5>Feeds</h5>
@@ -154,14 +155,14 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
   <hr>
   <div class="w3-container">
     <h5>General Stats</h5>
-    <p>New Visitors</p>
+    <p>Students in the School</p>
     <div class="w3-grey">
-      <div class="w3-container w3-center w3-padding w3-green" style="width:25%">+25%</div>
+      <div class="w3-container w3-center w3-padding w3-green" style="width:{{ students.count }}%">{{ students.count }}%</div>
     </div>
 
-    <p>New Users</p>
+    <p>Students in the class</p>
     <div class="w3-grey">
-      <div class="w3-container w3-center w3-padding w3-orange" style="width:50%">50%</div>
+      <div class="w3-container w3-center w3-padding w3-orange" style="width:{{ MathNbr }}%">{{ MathNbr }}%</div>
     </div>
 
     <p>Bounce Rate</p>
@@ -174,47 +175,34 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
   <div class="w3-container">
     <h5>Countries</h5>
     <table class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
-      <tr>
-        <td>United States</td>
-        <td>65%</td>
-      </tr>
-      <tr>
-        <td>UK</td>
-        <td>15.7%</td>
-      </tr>
-      <tr>
-        <td>Russia</td>
-        <td>5.6%</td>
-      </tr>
-      <tr>
-        <td>Spain</td>
-        <td>2.1%</td>
-      </tr>
-      <tr>
-        <td>India</td>
-        <td>1.9%</td>
-      </tr>
-      <tr>
-        <td>France</td>
-        <td>1.5%</td>
-      </tr>
+        {% for std in students %}
+            {% if std.section == 'Maternelle 2' %}
+              <tr>
+                <td>{{ std.nom }}</td>
+                <td>{{std.prenom}}</td>
+                <td>{{ std.GardeParental }}</td>
+                <td></td>
+              </tr>
+            {% endif %}
+        {% endfor %}
+
     </table><br>
-    <button class="w3-button w3-dark-grey">More Countries  <i class="fa fa-arrow-right"></i></button>
+    <button class="w3-button w3-dark-grey">  <i class="fa fa-arrow-right"></i></button>
   </div>
   <hr>
   <div class="w3-container">
-    <h5>Recent Users</h5>
+    <h5>professeurs</h5>
     <ul class="w3-ul w3-card-4 w3-white">
       <li class="w3-padding-16">
-        <img src="/w3images/avatar2.png" class="w3-left w3-circle w3-margin-right" style="width:35px">
-        <span class="w3-xlarge">Mike</span><br>
+        <img src="{% static 'images/person_2.jpg' %}" class="w3-left w3-circle w3-margin-right" style="width:35px">
+        <span class="w3-xlarge">{{ Professor }}</span><br>
       </li>
       <li class="w3-padding-16">
-        <img src="/w3images/avatar5.png" class="w3-left w3-circle w3-margin-right" style="width:35px">
+        <img src="{% static 'images/person_2.jpg' %}" class="w3-left w3-circle w3-margin-right" style="width:35px">
         <span class="w3-xlarge">Jill</span><br>
       </li>
       <li class="w3-padding-16">
-        <img src="/w3images/avatar6.png" class="w3-left w3-circle w3-margin-right" style="width:35px">
+        <img src="{% static 'images/person_2.jpg' %}" class="w3-left w3-circle w3-margin-right" style="width:35px">
         <span class="w3-xlarge">Jane</span><br>
       </li>
     </ul>

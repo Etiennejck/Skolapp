@@ -1,7 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
-from CANDIDAT.models import Parent
+
 
 
 class School (models.Model):
@@ -17,11 +17,18 @@ class School (models.Model):
 
 class ClassRoom(models.Model):
     sectionClass = models.CharField(verbose_name="Section", max_length=50)
-    number = models.IntegerField(verbose_name="numero de la classe")
+    number = models.IntegerField(verbose_name="nombre de classe")
     nombrePlaces = models.IntegerField(verbose_name="capacitée de la classe", null=True)
 
     def __str__(self):
-        return 'Section: {} , année de la classe: {} , le nombre de place dans la classe: {}'.format(self.sectionClass, self.number, self.nombrePlaces)
+        return 'Section: {} , nombre de classe: {} , nombre de place restante: {}'.format(self.sectionClass, self.number, self.nombrePlaces)
+
+class ClassSection(models.Model):
+    sectionRoom = models.ForeignKey('ClassRoom', on_delete=models.CASCADE)
+    intitule = models.CharField(verbose_name='Intitulé', max_length=20, null=True)
+    student = models.ForeignKey('CANDIDAT.Student', on_delete=models.CASCADE)
+    prof = models.ForeignKey('Professor', on_delete=models.CASCADE)
+    currentYears = models.ForeignKey('Years', on_delete=models.CASCADE)
 
 
 class Personne(models.Model):
@@ -38,42 +45,28 @@ class Personne(models.Model):
 
 class Professor(Personne):
     sectionProf = models.CharField(max_length=100)
+    def __str__(self):
+        return "{}, {}, {}, {}".format(self.nom, self.prenom, self.statut, self.sectionProf)
 
 
 class School_subjects(models.Model):
     nom = models.CharField(max_length=100)
 
 
-class Enseigne(models.Model):
-    school_subjectFK = models.ForeignKey(School_subjects, on_delete=models.CASCADE)
-    professorFK = models.ForeignKey(Professor, on_delete=models.CASCADE)
-
-
 class Teaches(models.Model):
+    school_subjectFK = models.ForeignKey(School_subjects, on_delete=models.CASCADE, default=False)
     professorFK = models.ForeignKey(Professor, on_delete=models.CASCADE)
     classroomFK = models.ForeignKey(ClassRoom, on_delete=models.CASCADE)
 
 
-class QuarterTeaches(models.Model):
-    teachesFK = models.ForeignKey(Teaches, on_delete=models.CASCADE)
-    quarter = models.ForeignKey("Quarter", on_delete=models.CASCADE)
-
-
-class Quarter(models.Model):
-    quarterNr = models.IntegerField(verbose_name="Trimestre numero")
-
-
-class QuarterClass(models.Model):
-    classRooms = models.ForeignKey("ClassRoom", on_delete=models.CASCADE)
-    quarters = models.ForeignKey(Quarter, on_delete=models.CASCADE)
-
-
 class Inscription(models.Model):
     dateInscription = models.DateField(verbose_name="date d'inscription")
-    parents = models.ForeignKey(Parent, on_delete=models.CASCADE)
+    parents = models.ForeignKey('CANDIDAT.Parent', on_delete=models.CASCADE)
 
 
 class Years(models.Model):
     schoolYear = models.DateTimeField(verbose_name="année scolaire", default=timezone.now)#affiche par defaut la date courante
-    inscriptionFK = models.ForeignKey(Inscription, on_delete=models.CASCADE)
-    quarterFK = models.ForeignKey(Quarter, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "Année scolaire en cours {} ".format(self.schoolYear)
+

@@ -1,14 +1,15 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 
-
 class Student(models.Model):
+    SECTION = [('Maternelle 1','Maternelle 1'), ('Maternelle 2','Maternelle 2'),('Maternelle 3','Maternelle 3'), ('Primaire','Primaire')]
     nom = models.CharField(max_length=50)
     prenom = models.CharField(max_length=50)
     sexe = models.CharField(max_length=2)
     dateNaissance = models.DateField()
     Nationalite = models.CharField(verbose_name="Nationalité", max_length=300, null=True)
-    ClassePrecedente = models.IntegerField(verbose_name="Classe précédente", default=0)
+    section = models.CharField(max_length=50, choices=SECTION, default=False)
+    ClassePrecedente = models.IntegerField(verbose_name="Classe", default=0)
     langueMaternelle = models.CharField(verbose_name="Langue maternelle", max_length=50)
     repasChaud = models.BooleanField(verbose_name="Repas chaud", default=False)
     XtraScolaire = models.BooleanField(verbose_name="Sortie extra scolaire", default=False)
@@ -17,7 +18,7 @@ class Student(models.Model):
     GardeParental = models.CharField(verbose_name="Garde parental", max_length=50)
 
     def __str__(self):
-        return "nom: {}, prenom: {}".format(self.nom, self.prenom)
+        return "nom: {}, prenom: {}, section {}".format(self.nom, self.prenom, self.section)
 
 class Parent(models.Model):
     nom = models.CharField(max_length=50)

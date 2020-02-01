@@ -3,7 +3,7 @@ from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView
-
+from SCHOOL.models import Professor
 from CANDIDAT.models import Parent, Student
 from django.shortcuts import render, redirect
 from django.utils.datetime_safe import date
@@ -26,9 +26,18 @@ def welcom(request):
 
 def dashboardProf(request):
     if request.user.is_authenticated:
+        liste_de_présence = []
+        if request.method == 'POST':
+            presence = request.POST['presence']
+            liste_de_présence.append(presence)
         user = request.user
         students = Student.objects.all()
-        return render(request, 'SCHOOL/dashboardProf.html', {'students': students, 'user':user})
+        student_in_the_class = [i for i in Student.objects.all() if i.section == 'Maternelle 2']
+        MathNbr = len(student_in_the_class)
+        professors = [i.prenom for i in Professor.objects.all()]
+
+
+        return render(request, 'SCHOOL/dashboardProf.html', {'students': students, 'user':user, 'student_in_the_class':student_in_the_class, 'MathNbr':MathNbr, 'Professor': professors})
     else:
         messages.info(request, 'Vous n\'est pas loger' )
         return redirect('welcom')
