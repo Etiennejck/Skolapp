@@ -1,6 +1,25 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 
+
+
+
+class Parent(models.Model):
+    nom = models.CharField(max_length=50)
+    prenom = models.CharField(max_length=50)
+    dateNaissance = models.DateField(verbose_name="date de naissance")
+    Nationalite = models.CharField(verbose_name="Nationalité", max_length=300, null=True)
+    rue = models.CharField(verbose_name="Rue, numero",max_length=70)
+    cp = models.IntegerField(verbose_name="Code postal")
+    ville = models.CharField(max_length=100)
+    Telephone = PhoneNumberField(null=True)
+    mail = models.EmailField()
+    dateInscription = models.DateField(verbose_name="date d'inscription", auto_now_add=True)
+
+    def __str__(self):
+        return "Nom: {} Prenom: {} Date d'inscription: {}".format(self.nom, self.prenom, self.dateInscription)
+
+
 class Student(models.Model):
     SECTION = [('Maternelle 1','Maternelle 1'), ('Maternelle 2','Maternelle 2'),('Maternelle 3','Maternelle 3'), ('Primaire','Primaire')]
     nom = models.CharField(max_length=50)
@@ -16,23 +35,13 @@ class Student(models.Model):
     AccordPedagogique = models.BooleanField(verbose_name="Accord pédagogique", default=False)
     AccordImage = models.BooleanField(verbose_name="Accord diffusion image", default=False)
     GardeParental = models.CharField(verbose_name="Garde parental", max_length=50)
+    parents_id = models.ForeignKey('Parent', on_delete=models.CASCADE, default=False)
+
 
     def __str__(self):
         return "nom: {}, prenom: {}, section {}".format(self.nom, self.prenom, self.section)
 
-class Parent(models.Model):
-    nom = models.CharField(max_length=50)
-    prenom = models.CharField(max_length=50)
-    dateNaissance = models.DateField(verbose_name="date de naissance")
-    Nationalite = models.CharField(verbose_name="Nationalité", max_length=300, null=True)
-    rue = models.CharField(verbose_name="Rue, numero",max_length=70)
-    cp = models.IntegerField(verbose_name="Code postal")
-    ville = models.CharField(max_length=100)
-    Telephone = PhoneNumberField(null=True)
-    mail = models.EmailField()
-    dateInscription = models.DateField(verbose_name="date d'inscription", auto_now_add=True)
-    def __str__(self):
-        return "Nom: {} Prenom: {} Date d'inscription: {}".format(self.nom, self.prenom, self.dateInscription)
+
 
 
 
