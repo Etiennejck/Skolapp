@@ -1,7 +1,7 @@
 from django.forms import ModelForm, CharField, Textarea, Select, ChoiceField, forms, ModelChoiceField
 from CANDIDAT.models import Parent, Student
 from django.core.exceptions import NON_FIELD_ERRORS, FieldDoesNotExist
-from phonenumber_field.modelfields import PhoneNumberField
+
 
 class ParentIncriptionForm(ModelForm):
     class Meta:
