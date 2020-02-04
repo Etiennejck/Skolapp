@@ -40,7 +40,9 @@
         <div class="jumbotron">
             <form action="{% url 'inscriptionParent' %}" method="post" class="form-group was-validated">
                 {% csrf_token %}
-                <p>{{ form.as_p }} </p>
+                <div class="form-group">
+                    <p>{{ form.as_p }}</p>
+                </div>
                 <p>{{ form.mail.default_validators }}</p>
                 <p>{{ form.Telephone.default_validators }}</p>
 

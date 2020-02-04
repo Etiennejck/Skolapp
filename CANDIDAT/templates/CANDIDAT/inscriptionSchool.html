@@ -40,7 +40,13 @@
                 <div class="panel-body was-validated" id="ajouter" >
                     <div id="signupform"  class="form-horizontal" role="form" methode="post">
                         {% csrf_token %}
-
+                            {% if messages %}
+                                         <ul class="messages">
+                                        {% for message in messages %}
+                                            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                                         {% endfor %}
+                                         </ul>
+                                    {% endif %}
 
 
                             <div class="jumbotron-fluid">
@@ -49,10 +55,11 @@
                                     <form action="{% url 'inscriptionSchool' %}" method="post" class="form-group">
                                         {% csrf_token %}
                                         <p style="animation: ease-in">{{ form2.as_p }}</p>
+
                                         <p style="color: seagreen">Voulez enregistrez un autre enfant ? </p>
                                         <input type="submit" value="OUI" class="btn btn-success" id="ajouter" v-on:click="ajouter1">
-                                        <p style="color: #7c0214">Lorsque vous avez terminé cliqué sur Inscription Parent </p>
-                                        <input type="submit" >
+                                        <p style="color: #7c0214">Lorsque vous avez terminé cliqué sur valider </p>
+                                        <input type="submit" class="btn btn-primary mb-5" value="valider">
                                     </form>
 
                                 </div>
@@ -62,6 +69,7 @@
                     </div>
                 </div>
         </div>
+</div>
 
 
     <script src={% static "js/jquery.min.js" %}></script>

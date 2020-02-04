@@ -1,8 +1,19 @@
+from django.core.exceptions import ValidationError
+from django.core.validators import EmailValidator
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 
 
+def validate_email(value):
+    if value != r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)":
+        raise EmailValidator(message='veuillez saisir une addresse valide')
 
+def validate_integer(value):
+    if value < 1 or value > 6:
+        raise ValidationError(
+            ('%(value)s doit etre modifié'),
+            params={'value':value}
+        )
 
 class Parent(models.Model):
     nom = models.CharField(max_length=50)
@@ -12,9 +23,12 @@ class Parent(models.Model):
     rue = models.CharField(verbose_name="Rue, numero",max_length=70)
     cp = models.IntegerField(verbose_name="Code postal")
     ville = models.CharField(max_length=100)
-    Telephone = PhoneNumberField(null=True)
-    mail = models.EmailField()
+    Telephone = PhoneNumberField(null=True, region='BE')
+    mail = models.EmailField(help_text='addresse email',validators=[validate_email])
     dateInscription = models.DateField(verbose_name="date d'inscription", auto_now_add=True)
+
+    class Meta:
+        ordering = ['-dateInscription']
 
     def __str__(self):
         return "Nom: {} Prenom: {} Date d'inscription: {}".format(self.nom, self.prenom, self.dateInscription)
@@ -28,18 +42,19 @@ class Student(models.Model):
     dateNaissance = models.DateField()
     Nationalite = models.CharField(verbose_name="Nationalité", max_length=300, null=True)
     section = models.CharField(max_length=50, choices=SECTION, default=False)
-    ClassePrecedente = models.IntegerField(verbose_name="Classe", default=0)
+    ClassePrecedente = models.IntegerField(verbose_name="Classe précédente", default=1, validators=[validate_integer])
     langueMaternelle = models.CharField(verbose_name="Langue maternelle", max_length=50)
     repasChaud = models.BooleanField(verbose_name="Repas chaud", default=False)
     XtraScolaire = models.BooleanField(verbose_name="Sortie extra scolaire", default=False)
     AccordPedagogique = models.BooleanField(verbose_name="Accord pédagogique", default=False)
     AccordImage = models.BooleanField(verbose_name="Accord diffusion image", default=False)
     GardeParental = models.CharField(verbose_name="Garde parental", max_length=50)
-    parents_id = models.ForeignKey('Parent', on_delete=models.CASCADE, default=False)
+    parents_id = models.ForeignKey('Parent', on_delete=models.CASCADE, default=False, verbose_name='Parent')
+
 
 
     def __str__(self):
-        return "nom: {}, prenom: {}, section {}".format(self.nom, self.prenom, self.section)
+        return "nom: {}, prenom: {}, section {}, fils de {}".format(self.nom, self.prenom, self.section,self.parents_id.nom)
 
 
 

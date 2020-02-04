@@ -8,13 +8,15 @@ from django.urls import reverse
 
 from SCHOOL.models import ClassRoom
 from CANDIDAT.forms import ParentIncriptionForm, StudentIncriptionForm
-from CANDIDAT.models import Student
+from CANDIDAT.models import Student, Parent
 
 
 
 
 def inscriptionSchool(request):
+    lastParent = Parent.objects.last()
     form2 = StudentIncriptionForm(request.POST or None)
+
     allSection = ClassRoom.objects.all()
     if request.method == 'POST':
         if form2.is_valid():
@@ -24,9 +26,9 @@ def inscriptionSchool(request):
             SectionSave = ClassRoom.objects.get(sectionClass=sect)
             SectionSave.nombrePlaces -= 1
             SectionSave.save()
-
-            return redirect('inscriptionParent')
+            return redirect('welcom')
         else:
+            messages.error(request, "Oups! un problème est survenu")
             form2 = StudentIncriptionForm()
     return render(request, 'CANDIDAT/inscriptionSchool.html', {'form2': form2,'test':allSection})
 
@@ -48,8 +50,9 @@ def inscriptionParent(request):
                 form.save()
                 user = User.objects.create_user(username=form['mail'].value(),email=form['mail'].value(), password=password)
                 #cls = ClassRoom.objects.filter(sectionClass=username).filter(number=)
-                return redirect('welcom')
+                return redirect('inscriptionSchool')
             else:
+                messages.error(request, "Oups! un problème est survenu")
                 form = ParentIncriptionForm()
         except:
             messages.error(request, 'cette addresse mail existe déjà !!!')
