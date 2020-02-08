@@ -1,0 +1,11 @@
+{% load static %}
+
+<h2> Liste des étudiants </h2>
+<form action="ListStudents.html">
+<select>
+    {% for student in object_list %}
+        <option value="{{ student.id }}" name="student">{{ student.prenom }} : {{ student.class_journal }}</option>
+    {% endfor %}
+</select>
+<input type="submit">
+</form>

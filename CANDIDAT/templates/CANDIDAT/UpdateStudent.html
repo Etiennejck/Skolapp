@@ -1,0 +1,11 @@
+{% load static %}
+<div class="jumbotron-fluid">
+    <div class="container">
+        <form action="" method="post">{% csrf_token %}
+            <div class="form-group">
+                <p>{{ form.as_p }}</p>
+            </div>
+            <input class="btn btn-primary" type="submit" value="save">
+        </form>
+    </div>
+</div>

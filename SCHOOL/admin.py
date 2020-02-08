@@ -13,5 +13,6 @@ admin.site.register(Student)
 admin.site.register(School)
 admin.site.register(ClassSection)
 admin.site.register(School_subjects)
+admin.site.register(Journal_de_classe)
 
 

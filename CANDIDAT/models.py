@@ -1,6 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.core.validators import EmailValidator
 from django.db import models
+from django.urls import reverse
 from phonenumber_field.modelfields import PhoneNumberField
 
 
@@ -49,12 +50,16 @@ class Student(models.Model):
     AccordPedagogique = models.BooleanField(verbose_name="Accord pédagogique", default=False)
     AccordImage = models.BooleanField(verbose_name="Accord diffusion image", default=False)
     GardeParental = models.CharField(verbose_name="Garde parental", max_length=50)
+    class_journal = models.TextField(verbose_name='notes des parents', null=True)
     parents_id = models.ForeignKey('Parent', on_delete=models.CASCADE, default=False, verbose_name='Parent')
 
 
 
     def __str__(self):
         return "nom: {}, prenom: {}, section {}, fils de {}".format(self.nom, self.prenom, self.section,self.parents_id.nom)
+
+    def get_absolute_url(self):
+        return reverse('DetailStudents', kwargs={'id':self.id})
 
 
 

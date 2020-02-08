@@ -26,7 +26,6 @@ class ClassRoom(models.Model):
 class ClassSection(models.Model):
     sectionRoom = models.ForeignKey('ClassRoom', on_delete=models.CASCADE)
     intitule = models.CharField(verbose_name='Intitulé', max_length=20, null=True)
-    student = models.ForeignKey('CANDIDAT.Student', on_delete=models.CASCADE)
     prof = models.ForeignKey('Professor', on_delete=models.CASCADE)
     currentYears = models.ForeignKey('Years', on_delete=models.CASCADE)
 
@@ -70,3 +69,15 @@ class Years(models.Model):
     def __str__(self):
         return "Année scolaire en cours {} ".format(self.schoolYear)
 
+class Journal_de_classe(models.Model):
+
+    annee_scolaire = models.ForeignKey('Years', on_delete=models.CASCADE, auto_created=True)
+    date_du_jour = models.DateField(verbose_name="date du jour", auto_now_add=True)
+    professeur = models.ForeignKey('Professor', on_delete=models.CASCADE)
+    student_id = models.ForeignKey('CANDIDAT.Student', on_delete=models.CASCADE)
+    intitule_du_devoir = models.CharField(max_length=50,verbose_name='intitule du devoir')
+    detail_du_devoir = models.TextField(verbose_name='devoir', null=True)
+    note_de_comportement = models.TextField(verbose_name='note de comportement', null=True)
+
+    def get_absolute_url(self):
+        return reverse('Journal_de_classe-detail', kwargs={'id':self.id})

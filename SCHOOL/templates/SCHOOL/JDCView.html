@@ -1,7 +1,13 @@
 <h2>Eliott</h2>
 <div>
-    <div class="form-group">
-        <label for="comment">Note de Comportement:</label>
-        <textarea name="noteComportement" class="form-control" rows="10" id="comment"></textarea>
-    </div>
+    <form action="{% url 'Journaldeclasse' %}">
+
+        <ul>
+        {% for notes in journal_de_classe_list %}
+            <li >{{ notes.intitule_du_devoir }}</li>
+        {% endfor %}
+        </ul>
+        <input type="submit">
+    </form>
+
 </div>

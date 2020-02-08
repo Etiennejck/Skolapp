@@ -2,6 +2,8 @@ from django.forms import ModelForm, CharField, Textarea, Select, ChoiceField, fo
 from CANDIDAT.models import Parent, Student
 from django.core.exceptions import NON_FIELD_ERRORS, FieldDoesNotExist
 
+from SCHOOL.models import Journal_de_classe
+
 
 class ParentIncriptionForm(ModelForm):
     class Meta:
@@ -24,6 +26,13 @@ class ParentIncriptionForm(ModelForm):
 class StudentIncriptionForm(ModelForm):
     class Meta:
         model = Student
+        exclude = ['class_journal']
+        fields = '__all__'
+
+
+class JournalDeClasssForm(ModelForm):
+    class Meta:
+        model = Journal_de_classe
         fields = '__all__'
 
 

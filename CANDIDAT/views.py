@@ -5,9 +5,10 @@ from django.contrib.auth.models import User
 from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
+from django.views.generic import ListView, DetailView, DeleteView, CreateView, UpdateView
 
 from SCHOOL.models import ClassRoom
-from CANDIDAT.forms import ParentIncriptionForm, StudentIncriptionForm
+from CANDIDAT.forms import ParentIncriptionForm, StudentIncriptionForm, JournalDeClasssForm
 from CANDIDAT.models import Student, Parent
 
 
@@ -64,4 +65,35 @@ def NbrRestant(request):
     placefree = ClassRoom.objects.all()
 
     return render(request, 'CANDIDAT/remaining_class.html',{'placefree': placefree})
+
+
+# vue basée sur des classes
+
+class list_Students(ListView):
+    model = Student
+    template_name = 'SCHOOL/ListStudents.html'
+    queryset = Student.objects.all()
+
+
+class details_Students(DetailView):
+    model = Student
+    template_name = 'SCHOOL/DetailStudents.html'
+
+    def get_object(self, queryset=None):
+        id = self.kwargs.get('id')
+        return get_object_or_404(Student, id=id)
+
+class update_Student(UpdateView):
+    template_name = "CANDIDAT/UpdateStudent.html"
+    form_class = StudentIncriptionForm #reference au modelForm
+    queryset = Student.objects.all()
+
+#passe l'id du model en parametre
+    def get_object(self, queryset=None):
+        id = self.kwargs.get('id')
+        return get_object_or_404(Student, id=id)
+#Valide le formulaire
+    def form_valid(self, form):
+        return super().form_valid(form)
+
 
