@@ -8,6 +8,7 @@ from CANDIDAT.models import Parent, Student
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.datetime_safe import date
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User, Group
 from django.contrib import messages
 from CANDIDAT.forms import JournalDeClasssForm
 
@@ -24,13 +25,16 @@ def welcom(request):
     heure = datetime.now()
     return render(request, 'SCHOOL/Welcom.html', {'dateDuJour': dateDuJour,'heure': heure})
 
+def loginProfessor(request):
+    return render(request, 'SCHOOL/loginProfessor.html' )
+
 
 def dashboardProf(request):
     if request.user.is_authenticated and request.user.groups.exists():
-        liste_de_présence = []
+        request.session.get('username')
         if request.method == 'POST':
             presence = request.POST['presence']
-            liste_de_présence.append(presence)
+
         user = request.user
         students = Student.objects.all()
         student_in_the_class = [i for i in Student.objects.all() if i.section == 'Maternelle 2']
@@ -55,12 +59,12 @@ def dashboardProf(request):
         return redirect('welcom')
 
 def dashboardParent(request):
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and not request.user.groups.exists():
         user = request.user
         students = Student.objects.all()
         return render(request, 'SCHOOL/dashboardParent.html', {'students': students, 'user':user})
     else:
-        messages.info(request, 'Vous n\'est pas loger' )
+        messages.info(request, 'Vous n\'est pas encore inscrit ', )
         return redirect('welcom')
 
 def LoginParent(request, **kwargs):
@@ -68,7 +72,9 @@ def LoginParent(request, **kwargs):
         username = request.POST['email']
         password = request.POST['password']
         user = authenticate(request,username=username, password=password)
+
         if user is not None:
+            request.session['username'] = username
             login(request, user)
             return redirect('dashboardParent')
         else:
@@ -76,9 +82,30 @@ def LoginParent(request, **kwargs):
             return redirect('welcom')
     return render(request, 'SCHOOL/loginParent.html')
 
+
+def LoginProfessor(request, **kwargs):
+    username = None
+    if request.method == 'POST':
+        username = request.POST['email']
+        password = request.POST['pass']
+        user = authenticate(request,username=username, password=password)
+
+        if user is not None:
+            request.session['username'] = username
+            login(request, user)
+            return redirect('dashboardProf')
+        else:
+            messages.error(request, 'your email or password is not correct')
+            return redirect('welcom')
+    return render(request, 'SCHOOL/LoginProfessor.html', {'username':username})
+
 def LogOut_view(request):
     logout(request)
     return render(request, 'SCHOOL/Welcom.html')
+
+def LogOutProf_view(request):
+    logout(request)
+    return render(request, 'SCHOOL/loginProfessor.html')
 
 class JournalDeClasseView(ListView):
     model = Journal_de_classe #Definie le model de la base de données que l'on va utilisé c'est = à (queryset= model.object.all())

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'SCHOOL.apps.SchoolConfig',
     'CANDIDAT.apps.CandidatConfig',
     'phonenumber_field',
+    'django_extensions',
 
 ]
 
