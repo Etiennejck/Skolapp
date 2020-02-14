@@ -1,13 +1,14 @@
-<h2>Eliott</h2>
-<div>
+<h2>List des Journaux de classe</h2>
+<div class="jumbotron" style="background: #9fcdff">
     <form action="{% url 'Journaldeclasse' %}">
-
         <ul>
         {% for notes in journal_de_classe_list %}
-            <li >{{ notes.intitule_du_devoir }}</li>
+            <li >{{ notes.professeur }}</li>
+            <li>{{ notes.student_id.prenom }}</li>
+            <li>{{ notes.student_id.presence }}</li>
+            <li>{{ notes.note_de_comportement }}</li>
+            <li>{{ notes.date_du_jour }}</li>
         {% endfor %}
         </ul>
-        <input type="submit">
     </form>
-
 </div>

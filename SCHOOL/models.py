@@ -70,7 +70,6 @@ class Years(models.Model):
         return "Année scolaire en cours {} ".format(self.schoolYear)
 
 class Journal_de_classe(models.Model):
-
     date_du_jour = models.DateField(verbose_name="date du jour", auto_now_add=True)
     professeur = models.ForeignKey('Professor', on_delete=models.CASCADE)
     student_id = models.ForeignKey('CANDIDAT.Student', on_delete=models.CASCADE)
@@ -78,6 +77,8 @@ class Journal_de_classe(models.Model):
     detail_du_devoir = models.TextField(verbose_name='devoir', null=True)
     note_de_comportement = models.TextField(verbose_name='note de comportement', null=True)
 
+    def __str__(self):
+        return "{}, Professeur: {}, devoir: {},  {},  comportement: {}".format(self.date_du_jour, self.professeur.prenom, self.intitule_du_devoir, self.detail_du_devoir, self.note_de_comportement )
 
     def get_absolute_url(self):
-        return reverse('Journal_de_classe-detail', kwargs={'id':self.id})
+        return reverse('dashboardProf')

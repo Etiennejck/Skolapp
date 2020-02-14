@@ -1,12 +1,8 @@
-from datetime import date
 
 from django.contrib import admin, sessions, messages
 from django.contrib.auth.models import User
-from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse
 from django.views.generic import ListView, DetailView, DeleteView, CreateView, UpdateView
-
 from SCHOOL.models import ClassRoom
 from CANDIDAT.forms import ParentIncriptionForm, StudentIncriptionForm, JournalDeClasssForm
 from CANDIDAT.models import Student, Parent

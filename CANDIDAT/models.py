@@ -32,7 +32,7 @@ class Parent(models.Model):
         ordering = ['-dateInscription']
 
     def __str__(self):
-        return "Nom: {} Prenom: {} Date d'inscription: {}".format(self.nom, self.prenom, self.dateInscription)
+        return "Nom: {} Prenom: {} Date d'inscription: {} id= {}".format(self.nom, self.prenom, self.dateInscription, self.id)
 
 
 class Student(models.Model):
@@ -52,14 +52,22 @@ class Student(models.Model):
     GardeParental = models.CharField(verbose_name="Garde parental", max_length=50)
     class_journal = models.TextField(verbose_name='notes des parents', null=True)
     parents_id = models.ForeignKey('Parent', on_delete=models.CASCADE, default=False, verbose_name='Parent')
+    presence = models.BooleanField(default=False, null=True)
 
-
+    def TrueFalse(self):
+        if self.presence == True:
+            return "present"
+        else:
+            return "pas present"
 
     def __str__(self):
-        return "nom: {}, prenom: {}, section {}, fils de {}".format(self.nom, self.prenom, self.section,self.parents_id.nom)
+        return "nom: {}, prenom: {}, section {}, fils de {} - {} id= {}".format(self.nom, self.prenom, self.section,self.parents_id.nom, self.parents_id.prenom, self.parents_id.id)
 
     def get_absolute_url(self):
         return reverse('DetailStudents', kwargs={'id':self.id})
+
+    class Meta:
+        ordering = ['section']
 
 
 

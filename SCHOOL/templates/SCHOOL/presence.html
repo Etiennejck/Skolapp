@@ -30,20 +30,31 @@
 </head>
 <body>
 
-<div class="jumbotron">
-    <div class="container-fluid">
-        <form  action="" method="post" >{% csrf_token %}
-            <table border="5" >
-                {{ form }}
-            </table>
-        </form>
-        <div class="jumbotron">
-                <input class="btn btn-outline-primary" type="submit" value="save">
-            </div>
-    </div>
-</div>
 
-    <script src={% static "js/jquery.min.js" %}></script>
+        <form action="{% url 'dashboardProf' %}" method="post">{% csrf_token %}
+            {% for pre in presenceUser %}
+                <div class="w3-container">
+                    <h2>Avatar List</h2>
+                    <ul class="w3-ul w3-card-4">
+                        <li class="w3-bar">
+                        <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-white w3-xlarge w3-right">×</span>
+                        <img src="{% static 'images/Favorites/icons8-personne-homme-50.png' %}" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
+                            <div class="w3-bar-item">
+                                <span class="w3-large">{{ pre.prenom }}</span><br>
+                                <span> section: {{ pre.section }}  present: {{ pre.presence }} - <input class="w3-check" name="presence" type="checkbox" value="{{ pre.presence }}"></span>
+
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+            {% endfor %}
+            <div class="w3-center">
+                <input class="w3-button w3-green w3-card-4 w3-margin-top " style="width: 40%" type="submit" value="valider">
+            </div>
+        </form>
+
+
+ <script src={% static "js/jquery.min.js" %}></script>
     <script src={% static "js/popper.min.js"%}></script>
     <script src={% static "js/owl.carousel.min.js"%}></script>
     <script src={% static "js/bootstrap-datepicker.js"%}></script>
@@ -60,36 +71,3 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script src="https://unpkg.com/vue"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-
-    <script type="text/javascript">
-        var ajouter = new Vue({
-            delimiters: ['[[',']]'],
-            el: '#ajouter',
-            data: {
-                nombre: 1
-            },
-            methods: {
-                ajouter1: function () {
-                    this.nombre += 1
-                },
-                reduire1: function () {
-                    this.nombre -= 1
-                }
-                }
-        });
-
-        var hi = new Vue({
-           el:'#hi',
-            data:{
-               seen: false
-            },
-
-        });
-
-        $(function () {
-
-        });
-
-    </script>
-</body>
-</html>

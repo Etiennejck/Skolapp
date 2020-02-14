@@ -33,6 +33,7 @@ class StudentIncriptionForm(ModelForm):
 class JournalDeClasssForm(ModelForm):
     class Meta:
         model = Journal_de_classe
+        localized_fields = ('__all__')
         fields = '__all__'
 
 

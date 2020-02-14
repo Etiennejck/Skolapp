@@ -1,6 +1,4 @@
 from datetime import datetime
-
-from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView, DetailView
 from SCHOOL.models import Professor, Journal_de_classe, ClassSection
@@ -11,8 +9,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User, Group
 from django.contrib import messages
 from CANDIDAT.forms import JournalDeClasssForm
-
+from django.contrib.auth.decorators import login_required
 from SCHOOL.models import ClassRoom
+from django.contrib.sessions.models import Session
 
 
 def Home(request):
@@ -31,50 +30,64 @@ def loginProfessor(request):
 
 def dashboardProf(request):
     if request.user.is_authenticated and request.user.groups.exists():
-        request.session.get('username')
+        students = Student.objects.all()
         if request.method == 'POST':
-            presence = request.POST['presence']
+            presenceQuest = request.POST['presence']
+            if presenceQuest == 'True':
+                students.values('presence').filter(journal_de_classe__professeur__mail=request.user.email).update(presence=False)
+
+            else:
+                students.values('presence').update(presence=True)
+
+
+            print(presenceQuest)
 
         user = request.user
-        students = Student.objects.all()
-        student_in_the_class = [i for i in Student.objects.all() if i.section == 'Maternelle 2']
+        profSection = [i.professeur.sectionProf for i in Journal_de_classe.objects.all() if i.professeur.mail == user.email ]
+        student_in_the_class = Student.objects.all().filter(journal_de_classe__professeur__mail=user.email)
         MathNbr = len(student_in_the_class)
-        professors = Professor.objects.all()
-        class_De = ClassSection.objects.all()
+        professors = [i.sectionProf for i in Professor.objects.all().filter(mail=user.email)]
+        class_De = ClassSection.objects.all().filter(prof__mail=user.email)
         JDC_ID = Journal_de_classe.objects.all()
-        JDCadd = Journal_de_classeCreate
         contextdash =  {
             'students': students,
             'user':user,
             'student_in_the_class':student_in_the_class,
             'MathNbr':MathNbr,
-            'Professor': professors,
+            'Professor': " ".join(professors),
             'class_De':class_De,
             'JDC_ID':JDC_ID,
+            'profSection':profSection,
         }
-
         return render(request, 'SCHOOL/dashboardProf.html',contextdash)
     else:
         messages.info(request, 'Vous n\'est pas loger' )
-        return redirect('welcom')
+        return redirect('LoginProfessor')
 
 def dashboardParent(request):
     if request.user.is_authenticated and not request.user.groups.exists():
         user = request.user
-        students = Student.objects.all()
-        return render(request, 'SCHOOL/dashboardParent.html', {'students': students, 'user':user})
+        jdcStudent = Journal_de_classe.objects.all().filter(student_id__parents_id__mail=user.email)
+        print(user.email, user.id)
+        print()
+        return render(request, 'SCHOOL/dashboardParent.html', {'user':user,'jdcStudent':jdcStudent})
     else:
         messages.info(request, 'Vous n\'est pas encore inscrit ', )
         return redirect('welcom')
+
+def presence(request):
+    presenceUser = [i for i in Student.objects.filter(journal_de_classe__professeur__mail=request.user.email)]
+    #presenceUser.update(presence=False)
+    return render(request, 'SCHOOL/presence.html', {'presenceUser':presenceUser})
+
+
 
 def LoginParent(request, **kwargs):
     if request.method == 'POST':
         username = request.POST['email']
         password = request.POST['password']
         user = authenticate(request,username=username, password=password)
-
         if user is not None:
-            request.session['username'] = username
             login(request, user)
             return redirect('dashboardParent')
         else:
@@ -89,9 +102,7 @@ def LoginProfessor(request, **kwargs):
         username = request.POST['email']
         password = request.POST['pass']
         user = authenticate(request,username=username, password=password)
-
         if user is not None:
-            request.session['username'] = username
             login(request, user)
             return redirect('dashboardProf')
         else:
@@ -111,7 +122,7 @@ class JournalDeClasseView(ListView):
     model = Journal_de_classe #Definie le model de la base de données que l'on va utilisé c'est = à (queryset= model.object.all())
     template_name = 'SCHOOL/JDCView.html'
     queryset = Journal_de_classe.objects.all()
-    paginate_by = 25
+    paginate_by = 30
 
 class Journal_de_classeCreate(CreateView):
     template_name = 'SCHOOL/Journal_de_classeAdd.html'

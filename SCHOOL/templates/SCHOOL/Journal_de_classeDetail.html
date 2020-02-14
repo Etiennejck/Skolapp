@@ -4,9 +4,13 @@
     <div class="container-fluid">
         <ul>
             <li>{{ journal_de_classe.date_du_jour }}</li>
-            <li>{{ journal_de_classe.professeur }}</li>
-            <li>{{ journal_de_classe.intitule_du_devoir }}</li>
+            <li>Professeur: {{ journal_de_classe.professeur }}</li>
+            <li>Intituler: {{ journal_de_classe.intitule_du_devoir }}</li>
             <li>{{ journal_de_classe.detail_du_devoir }}</li>
+            <li>Comportement: {{ journal_de_classe.note_de_comportement }}</li>
         </ul>
     </div>
+</div>
+<div>
+    <button><a href="{% url 'dashboardProf' %}"></a></button>
 </div>

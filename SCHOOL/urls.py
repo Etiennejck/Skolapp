@@ -20,4 +20,5 @@ urlpatterns = [
     path('Journal_de_classeUpdate/<int:id>/', Journal_de_classeUpdate.as_view(), name='Journal_de_classe-update'),
     path('Journal_de_classeDetail/<int:id>/', Journal_de_classeDetail.as_view(), name='Journal_de_classe-detail'),
     path('Journal_de_classeDelete/<int:id>/', Journal_de_classeDelete.as_view(), name='Journal_de_classe-delete'),
+    url(r'^presence', views.presence, name='presence')
 ]
