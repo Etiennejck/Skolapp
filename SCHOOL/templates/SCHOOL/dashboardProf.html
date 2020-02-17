@@ -127,7 +127,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
   <div class="w3-container">
     <h5>class students</h5>
 <form id="form">
-    <table class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white" id="presence_students">
+    <table class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white w3-card-4" id="presence_students">
         <thead class="table-dark">
             <tr>
                 <th>Nom</th>
@@ -154,12 +154,13 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 </form>
     <button class="w3-button w3-dark-grey "> <a href="{% url 'Journal_de_classeAdd'  %}"> <i class="fa fa-arrow-right"></i></a></button>
   </div>
+{% for mess in student_in_the_class %}
   <hr>
   <div class="w3-container">
-    {{ student_in_the_class }}
+    {{ mess.class_journal }}
   </div>
   <hr>
-
+{% endfor %}
   </div>
 {% endif %}
 <!-- Footer -->

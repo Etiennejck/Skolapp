@@ -1,4 +1,6 @@
 from datetime import datetime
+
+from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView, DetailView
 from SCHOOL.models import Professor, Journal_de_classe, ClassSection
@@ -31,16 +33,6 @@ def loginProfessor(request):
 def dashboardProf(request):
     if request.user.is_authenticated and request.user.groups.exists():
         students = Student.objects.all()
-        if request.method == 'POST':
-            presenceQuest = request.POST['presence']
-            if presenceQuest == 'True':
-                students.values('presence').filter(journal_de_classe__professeur__mail=request.user.email).update(presence=False)
-
-            else:
-                students.values('presence').update(presence=True)
-
-
-            print(presenceQuest)
 
         user = request.user
         profSection = [i.professeur.sectionProf for i in Journal_de_classe.objects.all() if i.professeur.mail == user.email ]
@@ -69,16 +61,28 @@ def dashboardParent(request):
         user = request.user
         jdcStudent = Journal_de_classe.objects.all().filter(student_id__parents_id__mail=user.email)
         print(user.email, user.id)
-        print()
+        if request.method == 'POST':
+            message = request.POST['message']
+            Student.objects.filter(parents_id__mail=user.email).update(class_journal=message)
         return render(request, 'SCHOOL/dashboardParent.html', {'user':user,'jdcStudent':jdcStudent})
     else:
         messages.info(request, 'Vous n\'est pas encore inscrit ', )
         return redirect('welcom')
 
 def presence(request):
-    presenceUser = [i for i in Student.objects.filter(journal_de_classe__professeur__mail=request.user.email)]
-    #presenceUser.update(presence=False)
-    return render(request, 'SCHOOL/presence.html', {'presenceUser':presenceUser})
+    students = Student.objects.filter(journal_de_classe__professeur__mail=request.user.email)
+    if request.method == 'POST':
+        presenceQuest = request.POST['presenceState']
+        print(presenceQuest)
+        studId = students.filter(id=presenceQuest)
+        print(studId)
+        if studId.filter(presence=True):
+            studId.update(presence=False)
+        elif studId.filter(presence=False):
+            studId.update(presence=True)
+        return redirect('dashboardProf')
+
+    return render(request, 'SCHOOL/presence.html', {'presenceUser':students})
 
 
 

@@ -54,14 +54,9 @@ class Student(models.Model):
     parents_id = models.ForeignKey('Parent', on_delete=models.CASCADE, default=False, verbose_name='Parent')
     presence = models.BooleanField(default=False, null=True)
 
-    def TrueFalse(self):
-        if self.presence == True:
-            return "present"
-        else:
-            return "pas present"
 
     def __str__(self):
-        return "nom: {}, prenom: {}, section {}, fils de {} - {} id= {}".format(self.nom, self.prenom, self.section,self.parents_id.nom, self.parents_id.prenom, self.parents_id.id)
+        return "id: {} nom: {}, prenom: {}, section {}, fils de {} - {} id= {} present: {}".format(self.id ,self.nom, self.prenom, self.section,self.parents_id.nom, self.parents_id.prenom, self.parents_id.id, self.presence)
 
     def get_absolute_url(self):
         return reverse('DetailStudents', kwargs={'id':self.id})

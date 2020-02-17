@@ -31,17 +31,17 @@
 <body>
 
 
-        <form action="{% url 'dashboardProf' %}" method="post">{% csrf_token %}
+        <form action="{% url 'presence' %}" method="post">{% csrf_token %}
             {% for pre in presenceUser %}
                 <div class="w3-container">
-                    <h2>Avatar List</h2>
+                    <h2>section: {{ pre.section }}</h2>
                     <ul class="w3-ul w3-card-4">
                         <li class="w3-bar">
                         <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-white w3-xlarge w3-right">×</span>
                         <img src="{% static 'images/Favorites/icons8-personne-homme-50.png' %}" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
                             <div class="w3-bar-item">
-                                <span class="w3-large">{{ pre.prenom }}</span><br>
-                                <span> section: {{ pre.section }}  present: {{ pre.presence }} - <input class="w3-check" name="presence" type="checkbox" value="{{ pre.presence }}"></span>
+                                <span class="w3-large">{{ pre.prenom }} - {{ pre.nom }}</span><br>
+                                <span>   present: {{ pre.presence }} - <input class="w3-check" name="presenceState" type="checkbox" value="{{ pre.id }}"></span>
 
                           </div>
                         </li>
@@ -49,7 +49,7 @@
                     </div>
             {% endfor %}
             <div class="w3-center">
-                <input class="w3-button w3-green w3-card-4 w3-margin-top " style="width: 40%" type="submit" value="valider">
+                <input id="validerPresence" class="w3-button w3-green w3-card-4 w3-margin-top " style="width: 40%" type="submit" value="valider">
             </div>
         </form>
 
@@ -71,3 +71,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script src="https://unpkg.com/vue"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<script type="text/javascript">
+    $('#validerPresence').on('click', function () {
+
+    })
+</script>
