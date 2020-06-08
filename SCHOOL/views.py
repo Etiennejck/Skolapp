@@ -33,7 +33,7 @@ def loginProfessor(request):
 def dashboardProf(request):
     if request.user.is_authenticated and request.user.groups.exists():
         students = Student.objects.all()
-
+        heureEnvoi = datetime.now()
         user = request.user
         profSection = [i.professeur.sectionProf for i in Journal_de_classe.objects.all() if i.professeur.mail == user.email ]
         student_in_the_class = Student.objects.all().filter(journal_de_classe__professeur__mail=user.email)
@@ -50,6 +50,7 @@ def dashboardProf(request):
             'class_De':class_De,
             'JDC_ID':JDC_ID,
             'profSection':profSection,
+            'heureEnvoi':heureEnvoi
         }
         return render(request, 'SCHOOL/dashboardProf.html',contextdash)
     else:
@@ -59,12 +60,14 @@ def dashboardProf(request):
 def dashboardParent(request):
     if request.user.is_authenticated and not request.user.groups.exists():
         user = request.user
+        heureEnvoi = datetime.now()
         jdcStudent = Journal_de_classe.objects.all().filter(student_id__parents_id__mail=user.email)
         print(user.email, user.id)
         if request.method == 'POST':
             message = request.POST['message']
             Student.objects.filter(parents_id__mail=user.email).update(class_journal=message)
-        return render(request, 'SCHOOL/dashboardParent.html', {'user':user,'jdcStudent':jdcStudent})
+
+        return render(request, 'SCHOOL/dashboardParent.html', {'user':user,'jdcStudent':jdcStudent, 'heureEnvoi':heureEnvoi})
     else:
         messages.info(request, 'Vous n\'est pas encore inscrit ', )
         return redirect('welcom')
@@ -95,8 +98,9 @@ def LoginParent(request, **kwargs):
             login(request, user)
             return redirect('dashboardParent')
         else:
-            messages.error(request, 'your email or password is not correct')
+            messages.error(request, 'your email or password is not correct', extra_tags='test')
             return redirect('welcom')
+
     return render(request, 'SCHOOL/loginParent.html')
 
 
@@ -129,6 +133,7 @@ class JournalDeClasseView(ListView):
     paginate_by = 30
 
 class Journal_de_classeCreate(CreateView):
+
     template_name = 'SCHOOL/Journal_de_classeAdd.html'
     form_class = JournalDeClasssForm
     queryset = Journal_de_classe.objects.all()

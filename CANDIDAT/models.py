@@ -25,7 +25,7 @@ class Parent(models.Model):
     cp = models.IntegerField(verbose_name="Code postal")
     ville = models.CharField(max_length=100)
     Telephone = PhoneNumberField(null=True, region='BE')
-    mail = models.EmailField(help_text='addresse email',validators=[validate_email])
+    mail = models.EmailField(help_text='addresse email')
     dateInscription = models.DateField(verbose_name="date d'inscription", auto_now_add=True)
 
     class Meta:

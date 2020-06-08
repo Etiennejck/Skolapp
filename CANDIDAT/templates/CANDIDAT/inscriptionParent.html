@@ -31,9 +31,14 @@
 <body style="background: url('{% static 'images/aaron-burden-xG8IQMqMITM-unsplash.jpg' %}') no-repeat fixed; background-size: 100%" >
 
 <div class="container">
-
+<div class="w3-container w3-white w3-card-4 w3-margin-top w3-border-pink">
+    <p class="w3-margin-left" style="font-size: large; text-align: center">Pour l'année {{ Y }}</p>
+    {% for listSchool in placefree %}
+        <p class="w3-margin-left " style="text-align: center">{{ listSchool }}</p>
+    {% endfor %}
+</div>
     <div>
-        <h1 id="said"> Bonjour<br> Veuillez remplir toutes les cases </h1>
+        <h1 id="said" style="color: white" > Bonjour<br> Veuillez remplir toutes les cases </h1>
     </div>
 
     <div class="jumbotron-fluid">
@@ -43,30 +48,23 @@
                 <div class="form-group">
                     <p>{{ form.as_p }}</p>
                 </div>
-                <p>{{ form.mail.default_validators }}</p>
-                <p>{{ form.Telephone.default_validators }}</p>
 
-
-                <div class="form-group">
+                {% comment %}<div class="form-group">
                     <label for="uname">Username:</label>
                     <input type="text" class="form-control" id="uname" placeholder="Enter username" name="username" required>
                     <div class="valid-feedback">Valid.</div>
-
-                </div>
+                </div>{% endcomment %}
 
                 <div class="form-group">
                     <label for="pwd">Password:</label>
                     <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd" required>
                     <div class="valid-feedback">Valid.</div>
-
                 </div>
-                <p>{{ students }}</p>
+
                 <input type="submit" value="OK" class="btn btn-primary">
                 <p style="color: #7c0214">Cliquez sur Ok lorsque tout les champs sont remplis </p>
-                <p>{{ res.capitalize }}</p>
-                {% for listSchool in placefree %}
-                    <p>{{ listSchool }}</p>
-                {% endfor %}
+
+
             </form>
         {% if messages %}
          <ul class="messages">

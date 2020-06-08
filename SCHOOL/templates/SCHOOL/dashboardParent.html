@@ -27,10 +27,24 @@
 
 </head>
 <body style="background: url({% static 'images/aaron-burden-xG8IQMqMITM-unsplash.jpg' %}) no-repeat fixed; background-size: 100%">
+<style>
+.marked {
+    font-size: 20px;
+    padding: 50px;
+    height: 50%;
+    color: white;
+}
+    .logout{
+        font-size: 20px;
+    padding: 50px;
+    height: 30%;
+    color: red;
+    }
 
-
+</style>
+<div id="root"></div>
 {% if user.is_authenticated %}
-    <H1 style="text-align: center; color: whitesmoke"> Hello {{ user.first_name }}</H1>
+    <H1 style="text-align: center; color: whitesmoke"> Hello {{ user.username }}</H1>
 
     {% for jdc in jdcStudent %}
         {% if jdc.student_id.presence == True %}
@@ -49,7 +63,7 @@
     {% endfor %}
 
 
-<button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-hover-purple w3-blue w3-display-bottomleft w3-padding-32">journal de classe</button>
+<button onmouseout="w3.removeClass('#test','marked')" onmouseover="w3.addClass('#test','marked')" id="test" onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-hover-purple w3-blue w3-display-bottomleft w3-padding-64 w3-card-4 w3-" style="margin-left: 2%">journal de classe</button>
 
 <div id="id01" class="w3-modal">
  <div class="w3-modal-content w3-card-4 w3-animate-zoom">
@@ -87,9 +101,9 @@
 
 </div>
 
-<button class="w3-button w3-circle w3-red w3-display-bottomright w3-padding-16"><a href="{% url 'LogoutView' %}">LOGOUT</a></button>
+<button onmouseout="w3.removeClass('#test3','logout')" onmouseover="w3.addClass('#test3','logout')" id="test3" class="w3-button w3-red w3-hover-light-green w3-display-bottomright w3-padding-64" style="margin-right: 2%"><a href="{% url 'LogoutView' %}">LOGOUT</a></button>
 
-    <button onclick="document.getElementById('id02').style.display='block'" class="w3-button w3-ios-blue w3-hover-orange w3-display-bottomleft w3-padding-32" style="margin-left: 15%" >Message absence</button>
+    <button onmouseout="w3.removeClass('#test2','marked')" onmouseover="w3.addClass('#test2','marked')" id="test2" onclick="document.getElementById('id02').style.display='block'" class="w3-button w3-ios-blue w3-hover-orange w3-display-bottomleft w3-padding-64 w3-card-4" style="margin-left: 15%" >Message absence</button>
 
   <div id="id02" class="w3-modal">
     <div class="w3-modal-content w3-card w3-animate-zoom">
@@ -102,7 +116,7 @@
         <span onclick="document.getElementById('id02').style.display='none'" class="w3-button w3-display-topright">&times;</span>
         <p>
             <form action="{% url 'dashboardParent' %}" method="post">{% csrf_token %}
-                <textarea class="w3-card-4" name="message" rows="5" cols="60">The cat was playing in the garden.</textarea>
+                <div><textarea class="w3-card-4" name="message" rows="5" cols="60" placeholder="ecrivez ici">     {{ heureEnvoi.today }}</textarea></div>
                 <br><br>
                 <input class="w3-button w3-card-4 w3-blue" type="submit">
             </form>
@@ -134,7 +148,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="{% static 'js/VueJSInteraction.js' %}"></script>
-
+    <script src="https://www.w3schools.com/lib/w3.js"></script>
+    <script src="{% static 'js/index.js' %}"></script>
     <script type="text/javascript">
         document.getElementsByClassName("tablink")[0].click();
 

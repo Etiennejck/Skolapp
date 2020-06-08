@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <title>W3.CSS Template</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -49,6 +49,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
     <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i>  General</a>
     <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-history fa-fw"></i>  History</a>
     <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cog fa-fw"></i>  Settings</a><br><br>{% endcomment %}
+      <img class="w3-card-4" src="{% static 'images/MArieadal Logo.png' %}" style="width:50%; margin-left: 5%" alt="Google Regional Map"></br>
   </div>
 </nav>
 
@@ -111,7 +112,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
     <div class="w3-row-padding" style="margin:0 -16px">
       <div class="w3-third">
         <h5>{{ Professor }}</h5>
-        <img src="{% static 'images/MArieadal Logo.png' %}" style="width:100%" alt="Google Regional Map">
+
       </div>
       <div class="w3-twothird">
 
@@ -152,21 +153,23 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         </tbody>
     </table><br>
 </form>
-    <button class="w3-button w3-dark-grey "> <a href="{% url 'Journal_de_classeAdd'  %}"> <i class="fa fa-arrow-right"></i></a></button>
   </div>
-{% for mess in student_in_the_class %}
-  <hr>
-  <div class="w3-container">
-    {{ mess.class_journal }}
-  </div>
-  <hr>
-{% endfor %}
-  </div>
+        <div>
+            {% for mess in student_in_the_class %}
+              <hr>
+              <div class="w3-container">
+                <p>{{ mess.class_journal }}</p>
+                <p>parent: {{ mess.parents_id.nom }} - {{ mess.parents_id.prenom }} - </p>
+              </div>
+              <hr>
+            {% endfor %}
+        </div>
 {% endif %}
 <!-- Footer -->
-  <footer class="w3-container w3-padding-16 w3-light-grey">
-    <h4>FOOTER</h4>
-    <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+<div>
+  <footer class="w3-container w3-padding-small w3-blue">
+      <p class="fa fa-address-book"> Klein Overlaar 3, 3320 Hoegaarden</p></br>
+      <p class="fa fa-phone"> 016 76 54 95</p>
   </footer>
   <!-- End page content -->
 </div>
